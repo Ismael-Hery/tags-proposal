@@ -17,7 +17,7 @@ app.post('/rubriques', rubriques);
 
 function rubriques(req, res, next) {
 
-   kNNRubriques.KNearestRubriques(req.body.text, req.body.K, 1,function(rubriques){
+   kNNRubriques.KNearestRubriques(req.body.text, req.body.K,function(rubriques){
       console.log('RUBRIQUES', rubriques);
 
       res.send(rubriques);
