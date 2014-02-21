@@ -1,0 +1,2 @@
+- enlever le bug sur la mémoire de la recherche précédente
+- filtrer les rubriques genre point de vue, idées etc
