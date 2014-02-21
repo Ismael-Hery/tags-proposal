@@ -2,6 +2,7 @@
   "dependencies": {
     "lodash": "~2.4.1",
     "superagent": "~0.16.0",
-    "async": "~0.2.10"
+    "async": "~0.2.10",
+    "express": "~3.4.8"
   }
 }
