@@ -1,2 +1,2 @@
-- enlever le bug sur la mémoire de la recherche précédente
+- trouver le bon paramétrage pour jouer sur le score OSS vs le fait que la rubrique soit trouvée dans plusieurs articles
 - filtrer les rubriques genre point de vue, idées etc
