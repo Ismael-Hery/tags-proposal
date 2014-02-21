@@ -29,7 +29,7 @@ function KNearestRubriques(content, K, scoreWeight){
    var rubriques = {};
    var result = [];
 
-   tagProposer.moreLikeThisContent(content, function (articles) {
+   tagProposer.moreLikeThisContent(content, K, function (articles) {
       async.each(articles,  getRubriques, function(){
          console.log(articlesWithRubs);
 
@@ -52,7 +52,7 @@ function KNearestRubriques(content, K, scoreWeight){
          });
 
          result = result.sort(function(a,b){
-            return a.score - b.score;
+            return b.score - a.score;
          });
 
          console.log(result);
@@ -61,4 +61,4 @@ function KNearestRubriques(content, K, scoreWeight){
    });
 }
 
-KNearestRubriques(content, 10, 1);
+KNearestRubriques(content, 20, 1);
