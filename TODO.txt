@@ -1,2 +1,13 @@
-- trouver le bon paramétrage pour jouer sur le score OSS vs le fait que la rubrique soit trouvée dans plusieurs articles
+Par ordre de priorités :
+
+- tester la profondeur optimale (2 ans, 1 an, 6 mois)
+- tester avec et sans boost
+- jouer avec différents paramètres pour le mlt (min term length...)
+- regarder les scoring oss de mlt pour voir si des termes parasites ne sont pas utilisés et utiliser un stopwords étendu
+- regarder si il n'existe pas un seuil de scoring en deça duquel il ne faut pas montrer la rubrique à la rédac (0.3) ?
+=> test quanti pour vérifier que ça ne change rien dans le résultat par rapport à 5 rubriques
+- tester un scoring en fonction du nombre de voisins qui ont la rubrique (plutôt que le score du mlt)
+- mesurer le temps de réponse du WS
 - filtrer les rubriques genre point de vue, idées etc
+
+- mettre des profondeurs différentes par rubrique
