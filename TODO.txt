@@ -1,8 +1,13 @@
 Par ordre de priorités :
 
+- rubriques à filtrer :
+* idées : 3232
+* éditoriaux : 1670220
+* elections présidentielles 2012
+* archives
+
+- tester avec 4700 caractères partout, pas sûr que ce soit mieux
 - tester la profondeur optimale (2 ans, 1 an, 6 mois)
-- tester avec et sans boost
-- jouer avec différents paramètres pour le mlt (min term length...)
 - regarder les scoring oss de mlt pour voir si des termes parasites ne sont pas utilisés et utiliser un stopwords étendu
 - regarder si il n'existe pas un seuil de scoring en deça duquel il ne faut pas montrer la rubrique à la rédac (0.3) ?
 => test quanti pour vérifier que ça ne change rien dans le résultat par rapport à 5 rubriques
