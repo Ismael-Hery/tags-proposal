@@ -23,10 +23,10 @@ app.set('view engine', 'ejs');
 /*
  * ROUTES
  */
+app.post('/depeches', depeches);
 app.post('/rubriques', rubriques);
 app.post('/articles', articles);
 app.post('/videos', videos);
-//app.post('/depeches', depeches);
 
 /**
  * CONTROLLERS
@@ -37,8 +37,6 @@ function rubriques(req, res, next) {
     throw new Error('text and K and threshold must be defined');
 
   kNNRubriques.KNearestRubriques(req.body.text, req.body.K, req.body.threshold, function(rubriques) {
-    console.log('RUBRIQUES', rubriques);
-
     res.send(rubriques);
   });
 
@@ -51,6 +49,50 @@ function articles(req, res, next) {
 function videos(req, res, next) {
   item(req, res, next, 13);
 };
+
+function depeches(req, res, next) {
+  if (req.body.text === undefined)
+    throw new Error('text must be defined');
+
+  var mltOptions = {
+    indexName: 'depeches',
+    searchFields: ['title_standard', 'content_standard'],
+    returnedFields: ['id', 'date','title'],
+    from: moment().subtract('days', 3),
+    dateFieldName: 'date'
+  };
+
+  moreLikeThis.moreLikeThis(req.body.text, mltOptions, function(articles) {
+
+    var result = [];
+
+    // Format data comming from OSS more like this + retrieve article URl
+    articles.forEach(function(article) {
+      var id = article.fields.filter(function(item) {
+        return item.fieldName === 'id';
+      })[0].values[0];
+
+      var date = article.fields.filter(function(item) {
+        return item.fieldName === 'date';
+      })[0].values[0];
+
+      var title = article.fields.filter(function(item) {
+        return item.fieldName === 'title';
+      })[0].values[0];
+
+      result.push({
+        score: article.score,
+        id: id,
+        title: title,
+        date: date
+      });
+
+    });
+
+    res.send(result);
+  });
+};
+
 
 /**
  * UTILITY FUNCTIONS
