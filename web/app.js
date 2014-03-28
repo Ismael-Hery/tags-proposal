@@ -10,13 +10,18 @@ app.use(express.bodyParser());
 // Routing
 app.use(app.router);
 
+// Fichiers statiques
+app.use(express.static(__dirname + '/public'));
+
+// Templates
+app.set('view engine', 'ejs');
+
 /*
  * ROUTES
  */
 app.post('/rubriques', rubriques);
 
 function rubriques(req, res, next) {
-
 
    if (req.body.text === undefined || req.body.K === undefined || req.body.threshold === undefined)
       throw new Error('text and K and threshold must be defined');
