@@ -19,7 +19,8 @@ var options = {
   searchFields: ['texte_exact'],
   returnedFields: ['item_id', 'item_titre'],
   from: moment().subtract('days', 365),
-  dateFieldName:'date_creation',
+  dateFieldName: 'date_creation',
+  options.typeItem: 4
 };
 
 mlt.moreLikeThis(content, options, function(result) {
