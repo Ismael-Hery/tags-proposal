@@ -20,7 +20,7 @@ var options = {
   returnedFields: ['item_id', 'item_titre'],
   from: moment().subtract('days', 365),
   dateFieldName: 'date_creation',
-  options.typeItem: 4
+  typeItem: 4
 };
 
 mlt.moreLikeThis(content, options, function(result) {
