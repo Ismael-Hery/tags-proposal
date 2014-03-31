@@ -64,7 +64,7 @@ function depeches(req, res, next) {
   var mltOptions = {
     indexName: 'depeches',
     searchFields: ['title_standard', 'content_standard'],
-    returnedFields: ['id', 'date','title'],
+    returnedFields: ['id', 'date','title','provider'],
     from: moment().subtract('days', 3),
     dateFieldName: 'date'
   };
@@ -87,11 +87,16 @@ function depeches(req, res, next) {
         return item.fieldName === 'title';
       })[0].values[0];
 
+      var provider = article.fields.filter(function(item) {
+        return item.fieldName === 'provider';
+      })[0].values[0];
+
       result.push({
         score: article.score,
         id: id,
         title: title,
-        date: date
+        date: date,
+        provider: provider
       });
 
     });
@@ -100,10 +105,6 @@ function depeches(req, res, next) {
   });
 };
 
-
-/**
- * UTILITY FUNCTIONS
- */
 function item(req, res, next, typeItem) {
   if (req.body.text === undefined)
     throw new Error('text must be defined');

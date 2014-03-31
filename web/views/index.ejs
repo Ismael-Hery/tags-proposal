@@ -106,7 +106,7 @@
             depeches.forEach(function(depeche){
                 var date = moment(depeche.date).lang('fr').format("LLLL");
 
-                depechesHtml += '<blockquote><p><a target ="_blank" href="https://huit.lemonde.fr/news/' + depeche.id + '">' +
+                depechesHtml += '<blockquote><p>' + depeche.provider + ': <a target ="_blank" href="https://huit.lemonde.fr/news/' + depeche.id + '">' +
                 depeche.title  +'</a></p><footer>' + date + '</footer><footer>score: ' + depeche.score + '</footer></blockquote>'
             });
 
