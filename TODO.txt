@@ -2,6 +2,8 @@ Par ordre de priorités :
 
 - proposition dépêches
 - propositions ensembles (si pertienent)
+
+=> Quand on aura migré en prod :
 - proposition vidéos
 - proposition articles
 
