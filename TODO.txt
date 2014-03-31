@@ -1,7 +1,6 @@
 Par ordre de priorités :
 
-- proposition dépêches
-- propositions ensembles (si pertienent)
+- propositions ensembles avec petite fenêtre dans le temps
 
 => Quand on aura migré en prod :
 - proposition vidéos
