@@ -1,2 +1,2 @@
 #!/bin/bash
-supervisor server.js
+supervisor server-tags.js
