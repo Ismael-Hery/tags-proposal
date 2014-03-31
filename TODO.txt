@@ -1,18 +1,15 @@
 Par ordre de priorités :
 
-- rubriques à filtrer :
-* idées : 3232
-* éditoriaux : 1670220
-* elections présidentielles 2012
-* archives
+- proposition rubriques
+- propositions ensembles (si pertienent)
+- proposition vidéos
+- proposition articles
+- proposition dépêches
 
-- tester avec 4700 caractères partout, pas sûr que ce soit mieux
-- tester la profondeur optimale (2 ans, 1 an, 6 mois)
-- regarder les scoring oss de mlt pour voir si des termes parasites ne sont pas utilisés et utiliser un stopwords étendu
-- regarder si il n'existe pas un seuil de scoring en deça duquel il ne faut pas montrer la rubrique à la rédac (0.3) ?
-=> test quanti pour vérifier que ça ne change rien dans le résultat par rapport à 5 rubriques
-- tester un scoring en fonction du nombre de voisins qui ont la rubrique (plutôt que le score du mlt)
-- mesurer le temps de réponse du WS
-- filtrer les rubriques genre point de vue, idées etc
+- filtrer les rubriques qui ajoutent du bruit:
+=> les filtrer dès le KNN pour ne pas avoir à en rajouter après pour combler 
+  * idées : 3232
+  * éditoriaux : 1670220
+  * elections présidentielles 2012
+  * archives
 
-- mettre des profondeurs différentes par rubrique
