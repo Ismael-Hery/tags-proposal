@@ -24,15 +24,22 @@
 
                 <div class="form-group">
                       <div class="col-xs-2">
-                        <button type="submit" class="btn btn-lg btn-primary">Enrichir</button>
+                        <button type="submit" id="get_rubriques" class="btn btn-lg btn-primary">Rubriques</button>
                       </div>
                 </div>
             </form>
         </div>
         <div class="col-xs-4">
-            <h3>Rubriques</h3>
-            <ul id="rubriques" style="display:none">
-            </ul>
+            <div id="rubriques" style="display:none">
+                <h3>Rubriques</h3>
+                <ul>
+                </ul>
+            </div>
+            <div id="depeches" style="display:none">
+                <h3>Dépêches proches</h3>
+                <ul>
+                </ul>
+            </div>
         </div>
 
     </div>
@@ -47,7 +54,10 @@
     $('form').submit(function (e) {
          e.preventDefault();
 
-         var rubriquesHtml = '';
+     });
+
+    $('#get_rubriques').click(function(e){
+         var rubriquesHtml = '<h3>Rubriques</h3><ul>';
 
          var inputs = {
             text:$('#text').val(),
@@ -62,6 +72,8 @@
                 console.log(rubrique.label);
                 rubriquesHtml += '<li><h4>' + rubrique.label + '</h4>' + rubrique.score  + '</li>'
             });
+
+            rubriquesHtml += '</ul>'
 
             $('#rubriques').html('');
             $('#rubriques').hide();

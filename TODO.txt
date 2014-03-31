@@ -1,10 +1,9 @@
 Par ordre de priorités :
 
-- proposition rubriques
+- proposition dépêches
 - propositions ensembles (si pertienent)
 - proposition vidéos
 - proposition articles
-- proposition dépêches
 
 - filtrer les rubriques qui ajoutent du bruit:
 => les filtrer dès le KNN pour ne pas avoir à en rajouter après pour combler 
