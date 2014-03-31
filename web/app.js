@@ -23,6 +23,7 @@ app.set('view engine', 'ejs');
 /*
  * ROUTES
  */
+app.get('/', home);
 app.post('/depeches', depeches);
 app.post('/rubriques', rubriques);
 app.post('/articles', articles);
@@ -31,10 +32,16 @@ app.post('/videos', videos);
 /**
  * CONTROLLERS
  */
+function home(req, res, next) {
+   res.render('index');
+};
+
 function rubriques(req, res, next) {
 
   if (req.body.text === undefined || req.body.K === undefined || req.body.threshold === undefined)
     throw new Error('text and K and threshold must be defined');
+
+  console.log('\n\nBODY', req.body);
 
   kNNRubriques.KNearestRubriques(req.body.text, req.body.K, req.body.threshold, function(rubriques) {
     res.send(rubriques);

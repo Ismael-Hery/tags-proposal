@@ -2,186 +2,75 @@
 <html>
 <head>
     <meta charset="utf8">
-    <title>Recherche dans les citations</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <title>Enrichissements</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <div class="jumbotron">
-        <h1>Recherche de citations</h1>
-        <p><small>« Il n'y a qu'une ligne au gouvernement » - Jean-Marc Ayrault le 3 juillet 2013</small></p>
-        <p><small>« On a souvent dit que je m'étais barré pour ne pas payer d'impôts. C'est en partie vrai » – Johnny Hallyday le 5 février 2013</small></p>
-    </div>
-</div>
-<div class="container">
 
-    <form method="post" action="/search">
-        <div class="row">
-            <div class="col-xs-4">
+    <div class="header">
+        <h3 class="text-muted">
+
+        </h3>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <form method="post" action="/search">
                 <div class="form-group">
-                    <label for="author">Auteur</label>
-                    <input id="author" class="form-control" name="author" placeholder="Auteur" autofocus="autofocus">
+                    <label for="text">Texte à enrichir</label>
+                    <textarea id="text" class="form-control" rows="20" autofocus></textarea>
                 </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-xs-4">
                 <div class="form-group">
-                    <label for="words">Mots clé</label>
-                    <input id="words" class="form-control" name="words" placeholder="Mots clé">
+                      <div class="col-xs-2">
+                        <button type="submit" class="btn btn-lg btn-primary">Enrichir</button>
+                      </div>
                 </div>
-            </div>
-            <div class="col-xs-4">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="searchIn" id="quoteOnly" value="quoteOnly" checked>
-                        Dans la citation
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="searchIn" id="quoteAndContext" value="quoteAndContext">
-                        Dans la citation ET dans le titre
-                    </label>
-                </div>
-            </div>
+            </form>
+        </div>
+        <div class="col-xs-4">
+            <h3>Rubriques</h3>
+            <ul id="rubriques" style="display:none">
+            </ul>
         </div>
 
-        <button type="submit" class="btn btn-lg btn-primary">Rechercher</button>
-        <img id="search_loading" src="/img/loading.gif" style="display: none">
-
-    </form>
-
-    <div id='results'>
     </div>
 
-    <!-- Depeche Modal -->
-    <div class="modal fade" id="depecheModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" style="width:70%;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Modal Title</h4>
-                </div>
-                <div class="modal-body">
-                    Modal Content
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
+
 </div>
 
 </body>
 </html>
-<script src='../js/jquery.js'></script>
-<script src='../js/bootstrap.min.js'></script>
-<script src='../js/moment.js'></script>
+<script src='./js/jquery.js'></script>
 <script>
-    moment.lang('fr');
-
-    var quoteToHighlight;
-
     $('form').submit(function (e) {
-        var inputs = {
-            author:$('input[name=author]').val(),
-            words:$('input[name=words]').val(),
-            searchIn:$('input[name=searchIn]:checked').val()
-        };
+         e.preventDefault();
 
-        function results(results) {
-            $('#search_loading').hide();
-            console.log('return results:', results);
+         var rubriquesHtml = '';
 
-            var date;
-            var html = '<div class="container"><ul class="list-unstyled">';
+         var inputs = {
+            text:$('#text').val(),
+            K:25,
+            threshold:0.25
+         };
 
-            results.hits.forEach(function (result) {
-                var sourceLabel, elt ='';
-                var timplusBaseUrl = 'http://timplus.paris5.lemonde.fr/docresult?docid=';
+         $.post('rubriques', inputs, displayRubriques);
 
-                date = moment(result.date);
-
-               if (result.sourceType === 'lemonde_article') {
-                  sourceLabel = ' article le Monde – <a target="_blank" href="http://www.lemonde.fr/tiny/' + result.sourceId + '/">' + result.title + '</a>';
-               }
-                else if (result.sourceType === 'lemonde_entretien') {
-                   sourceLabel = 'entretien le Monde – <a target="_blank" href="http://www.lemonde.fr' + result.sourceId + '">' + result.title + '</a>';
-                }
-                else if (result.sourceType === 'afp' || result.sourceType === 'reuters') {
-                   sourceLabel = result.sourceType.toUpperCase() + ' – <a href="" class="agency_link" data-quotation="' + result.quotation + '" data-docid="' + result.sourceId + '">' + result.title + '</a>' +
-                            '<img class="depeche_loading" src="/img/loading.gif" style="display: none">';
-                }
-
-                elt += '<li>' +
-                           '<blockquote>' +
-                              '<p>« ' + result.quotation + '&nbsp»</p>' +
-                              '<small>' + result.author + ' autour du ' + date.format("Do MMMM YYYY") +
-                              ' – source : ' + sourceLabel +
-                              '</small>' +
-                           '</blockquote>' +
-                         '</li>';
-               console.log(elt,'\n');
-
-               html += elt;
+         function displayRubriques(rubriques){
+            rubriques.forEach(function(rubrique){
+                console.log(rubrique.label);
+                rubriquesHtml += '<li><h4>' + rubrique.label + '</h4>' + rubrique.score  + '</li>'
             });
-            html += '</ul></div>';
 
-            $('#results').empty().append('<div class="container"><h4><span class="badge">' + results.total + '</span> citations correspondantes</h4></div>', html);
+            $('#rubriques').html('');
+            $('#rubriques').hide();
 
-            addDepecheLink()
+            $('#rubriques').html(rubriquesHtml);
+            $('#rubriques').show('slow','linear');
         };
-
-        $.post('search', inputs, results);
-
-        $('#search_loading').show();
-
-        e.preventDefault();
     });
 
-    function addDepecheLink() {
-        console.log('attach event');
-        $('.agency_link').each(function (idx, link) {
-            //console.log(link);
 
-            $(link).on('click', function (e) {
-
-               // Show throbber
-               $($(e.target)[0].nextSibling).show();
-
-               getDepeche($(e.target).data('docid'), $(e.target).data('quotation'));
-                e.preventDefault();
-            });
-        });
-    }
-
-    function getDepeche(depecheId, clickedQuotation) {
-        console.log(depecheId);
-
-        quoteToHighlight = clickedQuotation;
-
-        $.post('depeche', {depecheId:depecheId}, displayDepeche);
-    }
-
-    function displayDepeche(depeche) {
-       $('.depeche_loading').hide();
-        var text = depeche.text.replace(quoteToHighlight, '<span style="background-color:yellow">' + quoteToHighlight + '</span>');
-
-        // regexp + highlight currentQuote
-        console.log('current quote', quoteToHighlight);
-
-        document.getElementsByClassName('modal-title')[0].innerHTML = depeche.source + ' - ' + moment(depeche.date).format('ll') + ' - ' + depeche.title;
-        document.getElementsByClassName('modal-body')[0].innerHTML = text;
-
-
-        $('#depecheModal').modal();
-        //console.log(depeche);
-    }
 
 </script>
