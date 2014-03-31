@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-xs-8">
-            <form method="post" action="/search">
+            <form method="post" action="#">
                 <div class="form-group">
                     <label for="text">Texte à enrichir</label>
                     <textarea id="text" class="form-control" rows="20" autofocus></textarea>
@@ -25,6 +25,9 @@
                 <div class="form-group">
                       <div class="col-xs-2">
                         <button type="submit" id="get_rubriques" class="btn btn-lg btn-primary">Rubriques</button>
+                      </div>
+                      <div class="col-xs-2">
+                        <button type="submit" id="get_depeches" class="btn btn-lg btn-primary">Dépêches proches</button>
                       </div>
                 </div>
             </form>
@@ -50,7 +53,9 @@
 </body>
 </html>
 <script src='./js/jquery.js'></script>
+<script src='./js/moment.js'></script>
 <script>
+    moment.lang('fr');
     $('form').submit(function (e) {
          e.preventDefault();
 
@@ -80,6 +85,36 @@
 
             $('#rubriques').html(rubriquesHtml);
             $('#rubriques').show('slow','linear');
+        };
+    });
+
+    $('#get_depeches').click(function(e){
+         var depechesHtml = '<h3>Dépêches proches</h3>';
+
+         var inputs = {
+            text:$('#text').val(),
+         };
+
+         $.post('depeches', inputs, displayDepeches);
+
+         function displayDepeches(unsortedDepeches){
+
+            depeches = unsortedDepeches.sort(function(a, b){
+                return new Date(b.date) - new Date(a.date);
+            });
+
+            depeches.forEach(function(depeche){
+                var date = moment(depeche.date).lang('fr').format("LLLL");
+
+                depechesHtml += '<blockquote><p><a target ="_blank" href="https://huit.lemonde.fr/news/' + depeche.id + '">' +
+                depeche.title  +'</a></p><footer>' + date + '</footer><footer>score: ' + depeche.score + '</footer></blockquote>'
+            });
+
+            $('#depeches').html('');
+            $('#depeches').hide();
+
+            $('#depeches').html(depechesHtml);
+            $('#depeches').show('slow','linear');
         };
     });
 
