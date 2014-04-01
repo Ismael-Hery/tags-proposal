@@ -26,6 +26,7 @@ app.set('view engine', 'ejs');
 app.get('/', home);
 app.post('/depeches', depeches);
 app.post('/rubriques', rubriques);
+app.post('/ensembles', ensembles);
 app.post('/articles', articles);
 app.post('/videos', videos);
 
@@ -41,10 +42,23 @@ function rubriques(req, res, next) {
   if (req.body.text === undefined || req.body.K === undefined || req.body.threshold === undefined)
     throw new Error('text and K and threshold must be defined');
 
-  kNNRubriques.KNearestRubriques(req.body.text, req.body.K, req.body.threshold, function(rubriques) {
+  kNNRubriques.KNearestNeighbors(req.body.text, req.body.K, req.body.threshold, 'rubriques', function(rubriques) {
     console.log('RUBRIQUES', rubriques)
 
     res.send(rubriques);
+  });
+
+};
+
+function ensembles(req, res, next) {
+
+  if (req.body.text === undefined || req.body.K === undefined || req.body.threshold === undefined)
+    throw new Error('text and K and threshold must be defined');
+
+  kNNRubriques.KNearestNeighbors(req.body.text, req.body.K, req.body.threshold, 'ensembles', function(ensembles) {
+    console.log('ENSEMBLES', ensembles)
+
+    res.send(ensembles);
   });
 
 };

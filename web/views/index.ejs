@@ -27,6 +27,9 @@
                         <button type="submit" id="get_rubriques" class="btn btn-lg btn-primary">Rubriques</button>
                       </div>
                       <div class="col-xs-2">
+                        <button type="submit" id="get_ensembles" class="btn btn-lg btn-primary">Ensembles</button>
+                      </div>
+                      <div class="col-xs-2">
                         <button type="submit" id="get_depeches" class="btn btn-lg btn-primary">Dépêches proches</button>
                       </div>
                 </div>
@@ -35,6 +38,11 @@
         <div class="col-xs-4">
             <div id="rubriques" style="display:none">
                 <h3>Rubriques</h3>
+                <ul>
+                </ul>
+            </div>
+            <div id="ensembles" style="display:none">
+                <h3>Ensembles</h3>
                 <ul>
                 </ul>
             </div>
@@ -90,6 +98,35 @@
 
             $('#rubriques').html(rubriquesHtml);
             $('#rubriques').show('slow','linear');
+        };
+    });
+
+    $('#get_ensembles').click(function(e){
+        $('loader').show();
+
+         var rubriquesHtml = '<h3>Ensembles</h3>';
+
+         var inputs = {
+            text:$('#text').val(),
+            K:25,
+            threshold:0.05
+         };
+
+         $.post('ensembles', inputs, displayRubriques);
+
+         function displayRubriques(rubriques){
+            $('loader').hide();
+
+            rubriques.forEach(function(rubrique){
+                console.log(rubrique.label);
+                rubriquesHtml += '<blockquote><p>' + rubrique.label + '</p><small>id: ' + rubrique.id  + ' / score: ' + rubrique.score  + '</small></blockquote>'
+            });
+
+            $('#ensembles').html('');
+            $('#ensembles').hide();
+
+            $('#ensembles').html(rubriquesHtml);
+            $('#ensembles').show('slow','linear');
         };
     });
 
