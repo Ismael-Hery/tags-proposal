@@ -43,6 +43,9 @@
                 <ul>
                 </ul>
             </div>
+            <div>
+                <img id="loader" src="../img/loader.gif" style="display:none">
+            </div>
         </div>
 
     </div>
@@ -62,7 +65,9 @@
      });
 
     $('#get_rubriques').click(function(e){
-         var rubriquesHtml = '<h3>Rubriques</h3><ul>';
+        $('loader').show();
+
+         var rubriquesHtml = '<h3>Rubriques</h3>';
 
          var inputs = {
             text:$('#text').val(),
@@ -73,12 +78,12 @@
          $.post('rubriques', inputs, displayRubriques);
 
          function displayRubriques(rubriques){
+            $('loader').hide();
+
             rubriques.forEach(function(rubrique){
                 console.log(rubrique.label);
-                rubriquesHtml += '<li><h4>' + rubrique.label + '</h4>' + rubrique.score  + '</li>'
+                rubriquesHtml += '<blockquote><p>' + rubrique.label + '</p><small>score: ' + rubrique.score  + '</small></blockquote>'
             });
-
-            rubriquesHtml += '</ul>'
 
             $('#rubriques').html('');
             $('#rubriques').hide();
@@ -89,6 +94,9 @@
     });
 
     $('#get_depeches').click(function(e){
+
+        $('loader').show();
+
          var depechesHtml = '<h3>Dépêches proches</h3>';
 
          var inputs = {
@@ -98,6 +106,7 @@
          $.post('depeches', inputs, displayDepeches);
 
          function displayDepeches(unsortedDepeches){
+            $('loader').hide();
 
             depeches = unsortedDepeches.sort(function(a, b){
                 return new Date(b.date) - new Date(a.date);
