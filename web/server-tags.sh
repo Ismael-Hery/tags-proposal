@@ -1,2 +1,2 @@
 #!/bin/bash
-supervisor server-tags.js
+/var/lib/jenkins/.nvm/v0.10.26/bin/supervisor server-tags.js
