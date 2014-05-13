@@ -15,17 +15,17 @@ var options = {
 */
 
 var options = {
-  indexName: 'sept_ihe',
-  searchFields: ['texte_exact'],
-  returnedFields: ['item_id', 'item_titre'],
-  from: moment().subtract('days', 365),
+  indexName: 'sept',
+  searchFields: ['item_titre_exact','texte_exact'],
+  returnedFields: ['item_id', 'item_titre','texte'],
+  from: moment().subtract('days', 30),
   dateFieldName: 'date_creation',
   typeItem: 4
 };
 
 mlt.moreLikeThis(content, options, function(result) {
-  console.log(result);
-  /*result.forEach(function(item) {
+  //console.log(result);
+  result.forEach(function(item) {
     console.log('\n', 'score:', item.score, '\n', item.fields);
-  });*/
+  });
 });

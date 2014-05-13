@@ -2,7 +2,7 @@
 var express = require('express');
 var moment = require('moment');
 
-var kNNRubriques = require('../lib/kNNRubriques');
+var kNN = require('../lib/kNN');
 var moreLikeThis = require('../lib/moreLikeThis');
 var lmApi = require('../lib/lmApi');
 
@@ -42,7 +42,7 @@ function rubriques(req, res, next) {
   if (req.body.text === undefined || req.body.K === undefined || req.body.threshold === undefined)
     throw new Error('text and K and threshold must be defined');
 
-  kNNRubriques.KNearestNeighbors(req.body.text, req.body.K, req.body.threshold, 'rubriques', function(rubriques) {
+  kNN.KNearestNeighbors(req.body.text, req.body.K, req.body.threshold, 'rubriques', function(rubriques) {
     console.log('RUBRIQUES', rubriques)
 
     res.send(rubriques);
@@ -55,7 +55,7 @@ function ensembles(req, res, next) {
   if (req.body.text === undefined || req.body.K === undefined || req.body.threshold === undefined)
     throw new Error('text and K and threshold must be defined');
 
-  kNNRubriques.KNearestNeighbors(req.body.text, req.body.K, req.body.threshold, 'ensembles', function(ensembles) {
+  kNN.KNearestNeighbors(req.body.text, req.body.K, req.body.threshold, 'ensembles', function(ensembles) {
     console.log('ENSEMBLES', ensembles)
 
     res.send(ensembles);
