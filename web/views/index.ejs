@@ -36,6 +36,9 @@
             </form>
         </div>
         <div class="col-xs-4">
+            <div>
+                <img id="loader" src="../img/loader.gif" style="display:none">
+            </div>
             <div id="rubriques" style="display:none">
                 <h3>Rubriques</h3>
                 <ul>
@@ -50,9 +53,6 @@
                 <h3>Dépêches proches</h3>
                 <ul>
                 </ul>
-            </div>
-            <div>
-                <img id="loader" src="../img/loader.gif" style="display:none">
             </div>
         </div>
 
@@ -73,7 +73,10 @@
      });
 
     $('#get_rubriques').click(function(e){
-        $('loader').show();
+        $('#loader').show();
+        $('#rubriques').hide();
+        $('#depeches').hide();
+        $('#ensembles').hide();
 
          var rubriquesHtml = '<h3>Rubriques</h3>';
 
@@ -93,8 +96,12 @@
                 rubriquesHtml += '<blockquote><p>' + rubrique.label + '</p><small>score: ' + rubrique.score  + '</small></blockquote>'
             });
 
+            $('#loader').hide();
             $('#rubriques').html('');
+
             $('#rubriques').hide();
+            $('#ensembles').hide();
+            $('#depeches').hide();
 
             $('#rubriques').html(rubriquesHtml);
             $('#rubriques').show('slow','linear');
@@ -102,7 +109,11 @@
     });
 
     $('#get_ensembles').click(function(e){
-        $('loader').show();
+        $('#loader').show();
+        $('#rubriques').hide();
+        $('#depeches').hide();
+        $('#ensembles').hide();
+
 
          var rubriquesHtml = '<h3>Ensembles</h3>';
 
@@ -122,7 +133,11 @@
                 rubriquesHtml += '<blockquote><p>' + rubrique.label + '</p><small>id: ' + rubrique.id  + ' / score: ' + rubrique.score  + '</small></blockquote>'
             });
 
+            $('#loader').hide();
             $('#ensembles').html('');
+
+            $('#rubriques').hide();
+            $('#depeches').hide();
             $('#ensembles').hide();
 
             $('#ensembles').html(rubriquesHtml);
@@ -131,8 +146,11 @@
     });
 
     $('#get_depeches').click(function(e){
+        $('#loader').show();
+        $('#rubriques').hide();
+        $('#depeches').hide();
+        $('#ensembles').hide();
 
-        $('loader').show();
 
          var depechesHtml = '<h3>Dépêches proches</h3>';
 
@@ -156,8 +174,8 @@
                 depeche.title  +'</a></p><footer>' + date + '</footer><footer>score: ' + depeche.score + '</footer></blockquote>'
             });
 
+            $('#loader').hide();
             $('#depeches').html('');
-            $('#depeches').hide();
 
             $('#depeches').html(depechesHtml);
             $('#depeches').show('slow','linear');

@@ -76,7 +76,7 @@ function depeches(req, res, next) {
     throw new Error('text must be defined');
 
   var mltOptions = {
-    indexName: 'depeches',
+    indexName: 'cms_depeches',
     searchFields: ['title_standard', 'content_standard'],
     returnedFields: ['id', 'date','title','provider'],
     from: moment().subtract('days', 3),
