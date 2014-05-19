@@ -216,7 +216,6 @@
             videos.forEach(function(video){
 
                 if(video.score > 0.1){
-                    console.log('tutu');
                     var date = moment(video.date).lang('fr').format("LLLL");
 
                     videosHtml += '<blockquote><p><a target ="_blank" href="http://www.lemonde.fr/tiny/' + video.item_id + '/">' +

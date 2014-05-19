@@ -136,6 +136,9 @@ function item(req, res, next, typeItem) {
 
     var result = [];
 
+    if(articles === undefined)
+      return result;
+
     // Format data comming from OSS more like this + retrieve article URl
     articles.forEach(function(article) {
       var item_id = article.fields.filter(function(item) {
