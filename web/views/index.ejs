@@ -29,13 +29,17 @@
                       <div class="col-xs-2">
                         <button type="submit" id="get_ensembles" class="btn btn-lg btn-primary">Ensembles</button>
                       </div>
+                </div>
+
+                <div class="form-group">
                       <div class="col-xs-2">
-                        <button type="submit" id="get_depeches" class="btn btn-lg btn-primary">Dépêches proches</button>
+                        <button type="submit" id="get_depeches" class="btn btn-lg btn-primary">Dépêches</button>
                       </div>
                       <div class="col-xs-2">
-                        <button type="submit" id="get_videos" class="btn btn-lg btn-primary">Vidéos proches</button>
+                        <button type="submit" id="get_videos" class="btn btn-lg btn-primary">Vidéos</button>
                       </div>
                 </div>
+
             </form>
         </div>
         <div class="col-xs-4">
@@ -216,7 +220,7 @@
                     console.log('tutu');
                     var date = moment(video.date).lang('fr').format("LLLL");
 
-                    videosHtml += '<blockquote><p><a target ="_blank" href="https://www.lemonde.fr/tiny/' + video.item_id + '/">' +
+                    videosHtml += '<blockquote><p><a target ="_blank" href="http://www.lemonde.fr/tiny/' + video.item_id + '/">' +
                     video.item_titre  +'</a></p><footer>' + date + '</footer><footer>score: ' + video.score + '</footer></blockquote>'    
                 }                
             });
