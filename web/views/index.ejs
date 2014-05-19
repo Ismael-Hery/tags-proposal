@@ -32,6 +32,9 @@
                       <div class="col-xs-2">
                         <button type="submit" id="get_depeches" class="btn btn-lg btn-primary">Dépêches proches</button>
                       </div>
+                      <div class="col-xs-2">
+                        <button type="submit" id="get_videos" class="btn btn-lg btn-primary">Vidéos proches</button>
+                      </div>
                 </div>
             </form>
         </div>
@@ -51,6 +54,11 @@
             </div>
             <div id="depeches" style="display:none">
                 <h3>Dépêches proches</h3>
+                <ul>
+                </ul>
+            </div>
+            <div id="videos" style="display:none">
+                <h3>Vidéos proches</h3>
                 <ul>
                 </ul>
             </div>
@@ -179,6 +187,45 @@
 
             $('#depeches').html(depechesHtml);
             $('#depeches').show('slow','linear');
+        };
+    });
+
+
+    $('#get_videos').click(function(e){
+        $('#loader').show();
+        $('#rubriques').hide();
+        $('#depeches').hide();
+        $('#ensembles').hide();
+        $('#videos').hide();
+
+
+         var videosHtml = '<h3>Vidéos proches</h3>';
+
+         var inputs = {
+            text:$('#text').val(),
+         };
+
+         $.post('videos', inputs, displayVideos);
+
+         function displayVideos(videos){
+            $('loader').hide();
+
+            videos.forEach(function(video){
+
+                if(video.score > 0.1){
+                    console.log('tutu');
+                    var date = moment(video.date).lang('fr').format("LLLL");
+
+                    videosHtml += '<blockquote><p><a target ="_blank" href="https://www.lemonde.fr/tiny/' + video.item_id + '/">' +
+                    video.item_titre  +'</a></p><footer>' + date + '</footer><footer>score: ' + video.score + '</footer></blockquote>'    
+                }                
+            });
+
+            $('#loader').hide();
+            $('#videos').html('');
+
+            $('#videos').html(videosHtml);
+            $('#videos').show('slow','linear');
         };
     });
 

@@ -124,10 +124,10 @@ function item(req, res, next, typeItem) {
     throw new Error('text must be defined');
 
   var mltOptions = {
-    indexName: 'sept_ihe',
+    indexName: 'sept',
     searchFields: ['texte_exact', 'item_titre_exact'],
     returnedFields: ['item_id', 'item_titre', 'date_creation', 'date_publication'],
-    from: moment().subtract('days', 365),
+    from: moment().subtract('days', 90),
     dateFieldName: 'date_creation',
     typeItem: typeItem
   };
