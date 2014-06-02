@@ -23,21 +23,11 @@
                 </div>
 
                 <div class="form-group">
-                      <div class="col-xs-2">
                         <button type="submit" id="get_rubriques" class="btn btn-lg btn-primary">Rubriques</button>
-                      </div>
-                      <div class="col-xs-2">
                         <button type="submit" id="get_ensembles" class="btn btn-lg btn-primary">Ensembles</button>
-                      </div>
-                </div>
-
-                <div class="form-group">
-                      <div class="col-xs-2">
                         <button type="submit" id="get_depeches" class="btn btn-lg btn-primary">Dépêches</button>
-                      </div>
-                      <div class="col-xs-2">
                         <button type="submit" id="get_videos" class="btn btn-lg btn-primary">Vidéos</button>
-                      </div>
+                        <button type="submit" id="get_articles" class="btn btn-lg btn-primary">Articles</button>
                 </div>
 
             </form>
@@ -66,6 +56,11 @@
                 <ul>
                 </ul>
             </div>
+            <div id="articles" style="display:none">
+                <h3>Articles proches</h3>
+                <ul>
+                </ul>
+            </div>
         </div>
 
     </div>
@@ -88,6 +83,7 @@
         $('#rubriques').hide();
         $('#depeches').hide();
         $('#ensembles').hide();
+        $('#articles').hide();
 
          var rubriquesHtml = '<h3>Rubriques</h3>';
 
@@ -124,6 +120,7 @@
         $('#rubriques').hide();
         $('#depeches').hide();
         $('#ensembles').hide();
+        $('#articles').hide();
 
 
          var rubriquesHtml = '<h3>Ensembles</h3>';
@@ -161,6 +158,8 @@
         $('#rubriques').hide();
         $('#depeches').hide();
         $('#ensembles').hide();
+        $('#articles').hide();
+        $('#videos').hide();
 
 
          var depechesHtml = '<h3>Dépêches proches</h3>';
@@ -200,6 +199,7 @@
         $('#depeches').hide();
         $('#ensembles').hide();
         $('#videos').hide();
+        $('#articles').hide();
 
 
          var videosHtml = '<h3>Vidéos proches</h3>';
@@ -228,6 +228,44 @@
 
             $('#videos').html(videosHtml);
             $('#videos').show('slow','linear');
+        };
+    });
+
+    $('#get_articles').click(function(e){
+        $('#loader').show();
+        $('#rubriques').hide();
+        $('#depeches').hide();
+        $('#ensembles').hide();
+        $('#videos').hide();
+        $('#articles').hide();
+
+
+         var articlesHtml = '<h3>Articles proches</h3>';
+
+         var inputs = {
+            text:$('#text').val(),
+         };
+
+         $.post('articles', inputs, displayArticles);
+
+         function displayArticles(articles){
+            $('loader').hide();
+
+            articles.forEach(function(article){
+
+                if(article.score > 0.1){
+                    var date = moment(article.date).lang('fr').format("LLLL");
+
+                    articlesHtml += '<blockquote><p><a target ="_blank" href="http://www.lemonde.fr/tiny/' + article.item_id + '/">' +
+                    article.item_titre  +'</a></p><footer>' + date + '</footer><footer>score: ' + article.score + '</footer></blockquote>'    
+                }                
+            });
+
+            $('#loader').hide();
+            $('#articles').html('');
+
+            $('#articles').html(articlesHtml);
+            $('#articles').show('slow','linear');
         };
     });
 
